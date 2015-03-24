@@ -66,7 +66,8 @@ public class Level extends Pane{
 		}
 	}
 	private void checkCollision() {
-		if(ball.intersects(racket.getPosX(), racket.getPosY(), racket.getWidth(), racket.getWidth())){
+		if(ball.getBottom() <= (racket.getPosY()+1) && ball.getBottom() >= (racket.getPosY()-2)  
+				&& ball.getX() >= racket.getPosX() && ball.getX() <= (racket.getPosX()+racket.getwidth())){
 			ball.switchDirection();
 		}
 		

@@ -25,6 +25,12 @@ public class Racket extends Pane{
 		}
 		rec.setX(posX);
 	}
+	public int getwidth(){
+		return width;
+	}
+	public int getheigth(){
+		return heigth;
+	}
 
 	public int getPosX() {
 		return posX;
