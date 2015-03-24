@@ -49,10 +49,10 @@ public class Level extends Pane{
 	private void keyPressed() {
 		this.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.RIGHT) {
-                racket.moveRacket(2);;
+                racket.moveRacket(4);;
             }
             else if(e.getCode() == KeyCode.LEFT){
-                racket.moveRacket(-2);
+                racket.moveRacket(-4);
             }
         });
 		

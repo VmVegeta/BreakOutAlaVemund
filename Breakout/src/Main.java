@@ -10,10 +10,10 @@ public class Main extends Application {
     	Level level = new Level();
     	level.setOnKeyPressed(e -> { 
     	if(e.getCode() == KeyCode.RIGHT) {
-            level.racket.moveRacket(2);;
+            level.racket.moveRacket(4);;
         }
         else if(e.getCode() == KeyCode.LEFT){
-            level.racket.moveRacket(-2);
+            level.racket.moveRacket(-4);
         }});
         primaryStage.setScene(new Scene(level, 800, 600));
         primaryStage.setTitle("Break Out");
