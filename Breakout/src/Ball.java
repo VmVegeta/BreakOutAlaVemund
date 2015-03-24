@@ -20,7 +20,7 @@ public class Ball extends Pane{
 		if (x == radius){
 			setBallDirectionX(3);
 		}
-		if(x >= 800 - radius){
+		if(x >= 810 - radius){
 			setBallDirectionX(-3);
 		}
 		if(y == 0){
@@ -39,6 +39,11 @@ public class Ball extends Pane{
 
 	public void setBallDirectionY(double ballDirectionY) {
 		this.ballDirectionY = ballDirectionY;
+	}
+
+	public void switchDirection() {
+		this.ballDirectionY *= -1;
+		
 	}
 
 }

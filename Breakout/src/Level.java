@@ -29,6 +29,7 @@ public class Level extends Pane{
 			public void handle(long now) {
 				ball.moveBall();
 				keyPressed();
+				checkCollision();
 				
 			}
 
@@ -63,6 +64,12 @@ public class Level extends Pane{
 		if(bricks.get(i).isDestroyed() == false){
 			
 		}
+	}
+	private void checkCollision() {
+		if(ball.intersects(racket.getPosX(), racket.getPosY(), racket.getWidth(), racket.getWidth())){
+			ball.switchDirection();
+		}
+		
 	}
 
 }
