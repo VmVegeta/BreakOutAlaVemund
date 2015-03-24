@@ -13,11 +13,13 @@ public class Level extends Pane{
 	Racket racket = new Racket();
 	
 	public Level (){
+		setLevel1();
 		getChildren().add(racket);
 		getChildren().add(ball);
-		setLevel1();
+		for(int i = 0; i < 150; i++){
+		getChildren().add(bricks.get(i));
+		}
 		inintTimeline();
-		this.requestFocus();
 	}
 	
 	private void inintTimeline(){
@@ -37,10 +39,9 @@ public class Level extends Pane{
 
 	public void setLevel1(){
 		int k = 0;
-		for(int i = 0; i <= 10; i++){
-			for(int j = 0; j <= 15; j++){
+		for(int i = 1; i <= 10; i++){
+			for(int j = 1; j <= 15; j++){
 				bricks.add(new Brick(100+j*52,100+i*27));
-				k++;
 			}
 		}
 		

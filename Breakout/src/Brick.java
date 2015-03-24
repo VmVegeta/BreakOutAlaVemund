@@ -1,4 +1,5 @@
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Brick extends Pane{
@@ -10,18 +11,22 @@ public class Brick extends Pane{
 	Brick(int x, int y){
 		this.brickX = x;
 		this.brickY = y;
+		getChildren().add(rectangle);
+		rectangle.setFill(Color.BLUE);
 		
 		int random = (int) Math.random()*5;
 		
 		if(random == 0){
 			destroyed = true;
 		}
-		getChildren().add(rectangle);
+	}
+	public void drawBrick(){
+		if (destroyed == false){
+			getChildren().add(rectangle);
+			rectangle.setFill(Color.BLUE);
+		}
 	}
 	
-//	public drawBrick(){
-//		getChildren().add(rectangle);
-//	}
 
 	public int getbrickX() {
 		return brickX;
