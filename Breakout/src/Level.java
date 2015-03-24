@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 
 public class Level extends Pane{
 	
-	ArrayList<Brick> bricks = new ArrayList<Brick>(150);
+	ArrayList<Brick> bricks = new ArrayList<Brick>();
 	Rectangle rec = new Rectangle(100,100, 20, 20);
 	Ball ball = new Ball();
 	Racket racket = new Racket();
@@ -16,9 +16,7 @@ public class Level extends Pane{
 		setLevel1();
 		getChildren().add(racket);
 		getChildren().add(ball);
-		for(int i = 0; i < 150; i++){
-		getChildren().add(bricks.get(i));
-		}
+		draw();
 		inintTimeline();
 	}
 	
@@ -40,10 +38,13 @@ public class Level extends Pane{
 
 	public void setLevel1(){
 		int k = 0;
-		for(int i = 1; i <= 10; i++){
-			for(int j = 1; j <= 15; j++){
+		for(int i = 0; i < 10; i++){
+			for(int j = 0; j < 15; j++){
 				bricks.add(new Brick(100 + j * 52, 100 + i * 27));
 			}
+		}
+		for(Brick brick: bricks){
+			System.out.println(brick.getbrickX());
 		}
 		
 	}
@@ -60,9 +61,12 @@ public class Level extends Pane{
 	}
 	
 	public void draw(){
-		for(int i = 0; i < bricks.size(); i++)
-		if(bricks.get(i).isDestroyed() == false){
-			
+		for(int i = 0; i < bricks.size(); i++){
+		//if(bricks.get(i).isDestroyed() == false){
+			getChildren().add(bricks.get(i));
+		//}else{
+			//bricks.remove(i);
+		//}
 		}
 	}
 	private void checkCollision() {
