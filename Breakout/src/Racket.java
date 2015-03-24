@@ -16,7 +16,11 @@ public class Racket extends Pane{
 	}
 	public void moveRacket(int direction){
 		posX += direction;
+		if(posX <= 0){
+			rec.setX(0);
+		}else{
 		rec.setX(posX);
+		}
 	}
 
 	public int getPosX() {

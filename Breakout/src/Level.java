@@ -41,7 +41,7 @@ public class Level extends Pane{
 		int k = 0;
 		for(int i = 1; i <= 10; i++){
 			for(int j = 1; j <= 15; j++){
-				bricks.add(new Brick(100+j*52,100+i*27));
+				bricks.add(new Brick(100 + j * 52, 100 + i * 27));
 			}
 		}
 		
@@ -49,10 +49,10 @@ public class Level extends Pane{
 	private void keyPressed() {
 		this.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.RIGHT) {
-                racket.moveRacket(4);;
+                racket.moveRacket(8);;
             }
             else if(e.getCode() == KeyCode.LEFT){
-                racket.moveRacket(-4);
+                racket.moveRacket(-8);
             }
         });
 		
