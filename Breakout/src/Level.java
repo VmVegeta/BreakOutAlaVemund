@@ -41,7 +41,7 @@ public class Level extends Pane{
 		int k = 0;
 		for(int i = 1; i <= 10; i++){
 			for(int j = 1; j <= 15; j++){
-				bricks.add(new Brick(100+j*52,100+i*27));
+				bricks.add(new Brick(100 + j * 52, 100 + i * 27));
 			}
 		}
 		
