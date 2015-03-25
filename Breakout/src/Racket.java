@@ -13,7 +13,7 @@ public class Racket extends Pane{
 	public Racket() {
 		rec.setArcHeight(5);
 		rec.setArcWidth(5);
-		rec.setFill(Color.BLACK);
+		rec.setFill(Color.DARKORANGE);
 		getChildren().add(rec);
 	}
 	
