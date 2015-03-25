@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 public class Level extends Pane{
 
@@ -20,10 +21,11 @@ public class Level extends Pane{
 		setLevel1();
 		getChildren().add(racket);
 		getChildren().add(ball);
+		showBallsLeft();
 		inintTimeline();
 		start();
 	}
-	
+
 
 	private void inintTimeline(){
 		AnimationTimer timer = new AnimationTimer(){
@@ -139,6 +141,19 @@ public class Level extends Pane{
 	
 	private void checkCollision(){
 		if (ball.getY() > 600){
+			if(ballsLeft-- == 0){
+				Label lost = new Label("U r a loser!!");
+				lost.setLayoutX(280);
+				lost.setLayoutY(150);
+				lost.setUnderline(true);
+				lost.setWrapText(true);
+				lost.setTextFill(Color.DARKORANGE);
+				lost.setStyle("-fx-font-size:70;");
+				getChildren().remove(ball);
+				getChildren().remove(racket);
+				getChildren().add(lost);
+			}
+			showBallsLeft();
 		}
 		if (bricks.size() == 0){
 			Label victory = new Label("Victory!!!");
@@ -179,6 +194,18 @@ public class Level extends Pane{
 	public double elapsedTime(){
 		long now= System.currentTimeMillis();
 		return (now - time) / 1000.0;
+	}
+
+	private void showBallsLeft() {
+		int life = ballsLeft;
+		int x = 790;
+		int y = 580;
+		int i = 0;
+		while(life > 0){
+		Circle balls = new Circle(x - i * 7, y, 5, Color.RED);
+		getChildren().add(balls);
+		life--;
+		}
 	}
 
 }
