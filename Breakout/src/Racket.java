@@ -9,13 +9,14 @@ public class Racket extends Pane{
 	private int width = 90;
 	private int heigth = 10;
 	Rectangle rec = new Rectangle(posX, posY, width, heigth);
-	
+
 	public Racket() {
 		rec.setArcHeight(5);
 		rec.setArcWidth(5);
 		rec.setFill(Color.BLACK);
 		getChildren().add(rec);
 	}
+	
 	public void moveRacket(int direction){
 		posX += direction;
 		if(posX <= 0){
@@ -25,9 +26,11 @@ public class Racket extends Pane{
 		}
 		rec.setX(posX);
 	}
+	
 	public int getwidth(){
 		return width;
 	}
+	
 	public int getheigth(){
 		return heigth;
 	}
@@ -47,6 +50,5 @@ public class Racket extends Pane{
 	public void setPosY(int posY) {
 		this.posY = posY;
 	}
-	
 
 }
