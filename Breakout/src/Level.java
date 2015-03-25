@@ -11,17 +11,19 @@ import javafx.scene.paint.Color;
 public class Level extends Pane{
 
 	ArrayList<Brick> bricks = new ArrayList<Brick>();
-	Ball ball = new Ball();
 	Racket racket = new Racket();
-	public int wishToMoveRacket = 0;
+	Ball ball = new Ball(racket.getPosX(), racket.getPosY());
+	StopWatch stopWatch = new StopWatch();
+	private int wishToMoveRacket = 0;
+	private int ballsLeft = 3;
 
 	public Level (){
 		setLevel1();
 		getChildren().add(racket);
 		getChildren().add(ball);
-		
+		createTimer();
 		inintTimeline();
-	}
+	
 
 	private void inintTimeline(){
 		AnimationTimer timer = new AnimationTimer(){
@@ -60,6 +62,20 @@ public class Level extends Pane{
 		}
 
 	}
+	
+	private void setLevel2(){
+		for(int i = 0; i < 10; i++){
+			for(int j = 0; j < 15; j++){
+				bricks.add(new BrickLevel2(50 + j * 47, 60 + i * 22));
+			}
+		}
+		for(Brick brick: bricks){
+			if(brick.isDestroyed() == false){
+				getChildren().add(brick);
+			}
+		}
+	}
+	
 	private void keyPressed() {
 		this.setOnKeyPressed(e -> {
 			if(e.getCode() == KeyCode.RIGHT) {
@@ -119,9 +135,9 @@ public class Level extends Pane{
 			}	
 		}
 	}
+	
 	private void checkCollision(){
 		if (ball.getY() > 600){
-
 		}
 		if (bricks.size() == 0){
 			Label victory = new Label("Victory!!!");
@@ -141,6 +157,11 @@ public class Level extends Pane{
 		}else if (ball.getY() > 540){
 			checkCollisionWithRacket();
 		}
+	}
+	
+	private void createTimer() {
+		
+		
 	}
 
 }
