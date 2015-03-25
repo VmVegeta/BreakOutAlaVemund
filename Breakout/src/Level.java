@@ -11,6 +11,7 @@ public class Level extends Pane{
 	Rectangle rec = new Rectangle(100,100, 20, 20);
 	Ball ball = new Ball();
 	Racket racket = new Racket();
+	public int wishToMoveRacket = 0;
 	
 	public Level (){
 		setLevel1();
@@ -29,7 +30,13 @@ public class Level extends Pane{
 			public void handle(long now) {
 				ball.moveBall();
 				keyPressed();
-				checkCollision();
+				if(wishToMoveRacket == 1){
+					racket.moveRacket(5);
+				}
+				if(wishToMoveRacket == -1){
+					racket.moveRacket(-5);
+				}
+				checkCollisionWithRacket();
 				
 			}
 
@@ -53,10 +60,10 @@ public class Level extends Pane{
 	private void keyPressed() {
 		this.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.RIGHT) {
-                racket.moveRacket(8);;
+                wishToMoveRacket = 1;
             }
             else if(e.getCode() == KeyCode.LEFT){
-                racket.moveRacket(-8);
+                wishToMoveRacket = -1;
             }
         });
 		
@@ -71,12 +78,17 @@ public class Level extends Pane{
 		//}
 		}
 	}
-	private void checkCollision() {
+	private void checkCollisionWithRacket() {
 		if(ball.getBottom() <= (racket.getPosY()+1) && ball.getBottom() >= (racket.getPosY()-2)  
 				&& ball.getX() >= racket.getPosX() && ball.getX() <= (racket.getPosX()+racket.getwidth())){
 			ball.switchDirection();
 		}
 		
 	}
+//	private void checkCollisionWithBrick(){
+//		for(int i = 0; i < bricks.size(); i++){
+//			bricks.get(i).get
+//		}
+//	}
 
 }
