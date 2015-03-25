@@ -2,8 +2,11 @@ import java.util.ArrayList;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 public class Level extends Pane{
 
@@ -122,6 +125,14 @@ public class Level extends Pane{
 		}
 		if (bricks.size() == 0){
 			Label victory = new Label("Victory!!!");
+			victory.setLayoutX(280);
+			victory.setLayoutY(150);
+			victory.setUnderline(true);
+			victory.setWrapText(true);
+			victory.setTextFill(Color.DARKORANGE);
+			victory.setStyle("-fx-font-size:70;");
+			getChildren().remove(ball);
+			getChildren().remove(racket);
 			getChildren().add(victory);
 
 		}
