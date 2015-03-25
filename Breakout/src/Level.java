@@ -16,7 +16,9 @@ public class Level extends Pane{
 		setLevel1();
 		getChildren().add(racket);
 		getChildren().add(ball);
-		draw();
+		for(int i = 0; i < 150; i++){
+		getChildren().add(bricks.get(i).drawBrick());
+		}
 		inintTimeline();
 	}
 	
