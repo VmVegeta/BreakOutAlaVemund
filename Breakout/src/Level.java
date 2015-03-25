@@ -37,6 +37,7 @@ public class Level extends Pane{
 					racket.moveRacket(-5);
 				}
 				checkCollisionWithRacket();
+				checkCollisionWithBrick();
 				
 			}
 
@@ -65,17 +66,20 @@ public class Level extends Pane{
             else if(e.getCode() == KeyCode.LEFT){
                 wishToMoveRacket = -1;
             }
+        this.setOnKeyReleased(k -> {
+        	wishToMoveRacket = 0;
+        });
         });
 		
 	}
 	
 	public void draw(){
 		for(int i = 0; i < bricks.size(); i++){
-		//if(bricks.get(i).isDestroyed() == false){
+		if(bricks.get(i).isDestroyed() == false){
 			getChildren().add(bricks.get(i));
-		//}else{
-			//bricks.remove(i);
-		//}
+		}else{
+			bricks.remove(i);
+		}
 		}
 	}
 	private void checkCollisionWithRacket() {
@@ -85,10 +89,14 @@ public class Level extends Pane{
 		}
 		
 	}
-//	private void checkCollisionWithBrick(){
-//		for(int i = 0; i < bricks.size(); i++){
-//			bricks.get(i).get
-//		}
-//	}
+	private void checkCollisionWithBrick(){
+		for(int i = 0; i < bricks.size(); i++){
+			if(ball.getX() >= bricks.get(i).getbrickX() && ball.getX() <= (bricks.get(i).getbrickX() + 50)
+					&& ball.getTop() <= bricks.get(i).getbrickY() && ball.getTop() >= (bricks.get(i).getbrickY() -3)){
+				bricks.get(i).setDestroyed(true);
+				ball.switchDirection();
+			}
+		}
+	}
 
 }
