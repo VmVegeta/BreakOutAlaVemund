@@ -42,10 +42,13 @@ public class Ball extends Pane{
 		this.ballDirectionY = ballDirectionY;
 	}
 
-	public void switchDirection() {
+	public void switchDirectionY() {
 		this.ballDirectionY *= -1;
-		
 	}
+	public void switchDirectionX(){
+		this.ballDirectionX *= -1;
+	}
+	
 	public int getRigth(){
 		return x+radius;
 	}

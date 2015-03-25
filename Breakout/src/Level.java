@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
@@ -36,8 +37,8 @@ public class Level extends Pane{
 				if(wishToMoveRacket == -1){
 					racket.moveRacket(-5);
 				}
-				checkCollisionWithRacket();
-				checkCollisionWithBrick();
+				checkCollision();
+
 
 			}
 
@@ -45,6 +46,7 @@ public class Level extends Pane{
 		};
 		timer.start();
 	}
+
 
 	public void setLevel1(){
 		for(int i = 0; i < 10; i++){
@@ -72,7 +74,7 @@ public class Level extends Pane{
 	private void checkCollisionWithRacket() {
 		if(ball.getBottom() <= (racket.getPosY()+1) && ball.getBottom() >= (racket.getPosY()-2)  
 				&& ball.getX() + 2 >= racket.getPosX() && ball.getX() -2 <= (racket.getPosX()+racket.getwidth())){
-			ball.switchDirection();
+			ball.switchDirectionY();
 		}
 
 	}
@@ -83,37 +85,52 @@ public class Level extends Pane{
 			}
 		}
 		for(int i = 0; i < bricks.size(); i++){
-			if((ball.getX() + 2) >= bricks.get(i).getTranslateX() && (ball.getX() -2) <= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth())
+			if((ball.getX() + 3) >= bricks.get(i).getTranslateX() && (ball.getX() -3) <= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth())
 					&& ball.getTop() <= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight() +1) 
 					&& ball.getTop() >= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight() -2)){
-				
+
 				bricks.get(i).setDestroyed(true);
 				getChildren().remove(bricks.get(i));
 				ball.setBallDirectionY(3);
-				
-			}else if((ball.getX() + 2) >= bricks.get(i).getTranslateX() && (ball.getX() - 2) <= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth())
+
+			}else if((ball.getX() + 3) >= bricks.get(i).getTranslateX() && (ball.getX() - 3) <= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth())
 					&& ball.getBottom() <= (bricks.get(i).getTranslateY() +1) && ball.getBottom() >= (bricks.get(i).getTranslateY() -2)){
-				
+
 				bricks.get(i).setDestroyed(true);
 				getChildren().remove(bricks.get(i));
 				ball.setBallDirectionY(-3);
-				
-			}else if((ball.getY() + 2) >= bricks.get(i).getTranslateY() && (ball.getY() - 2) <= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight())
+
+			}else if((ball.getY() + 3) >= bricks.get(i).getTranslateY() && (ball.getY() - 3) <= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight())
 					&& ball.getRigth() <= (bricks.get(i).getTranslateX() + 1) && ball.getRigth() >= (bricks.get(i).getTranslateX() - 2)){
-				
+
 				bricks.get(i).setDestroyed(true);
 				getChildren().remove(bricks.get(i));
 				ball.setBallDirectionX(-3);
-				
-			}else if((ball.getY() + 2) >= bricks.get(i).getTranslateY() && (ball.getY() - 2) <= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight())
+
+			}else if((ball.getY() + 3) >= bricks.get(i).getTranslateY() && (ball.getY() - 3) <= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight())
 					&& ball.getLeft() <= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth() + 1)
 					&& ball.getLeft() >= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth() - 2)){
-				
+
 				bricks.get(i).setDestroyed(true);
 				getChildren().remove(bricks.get(i));
 				ball.setBallDirectionX(3);
-			}
-					
+
+			}	
+		}
+	}
+	private void checkCollision(){
+		if (ball.getY() > 600){
+
+		}
+		if (bricks.size() == 0){
+			Label victory = new Label("Victory!!!");
+			getChildren().add(victory);
+
+		}
+		if (ball.getY() < 300){
+			checkCollisionWithBrick();
+		}else if (ball.getY() > 540){
+			checkCollisionWithRacket();
 		}
 	}
 
