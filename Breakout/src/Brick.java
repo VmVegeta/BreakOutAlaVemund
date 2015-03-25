@@ -8,14 +8,16 @@ public class Brick extends Rectangle{
 	Brick(int x, int y){
 		this.setTranslateX(x);
 		this.setTranslateY(y);
-		this.setHeight(25);
-		this.setWidth(50);
+		this.setHeight(20);
+		this.setWidth(45);
 		this.setFill(Color.BLUE);
 		
-		int random = (int) Math.random()*5;
+		double random = Math.random();
 		
-		if(random == 0){
+		if(random <= 0.2){
 			destroyed = true;
+		}else{
+			destroyed = false;
 		}
 	}
 
