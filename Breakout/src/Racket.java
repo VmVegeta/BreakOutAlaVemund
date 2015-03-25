@@ -6,21 +6,33 @@ import javafx.scene.shape.Rectangle;
 public class Racket extends Pane{
 	private int posX = 400;
 	private int posY = 550;
-	Rectangle rec = new Rectangle(posX, posY, 90, 10);
-	
+	private int width = 90;
+	private int heigth = 10;
+	Rectangle rec = new Rectangle(posX, posY, width, heigth);
+
 	public Racket() {
 		rec.setArcHeight(5);
 		rec.setArcWidth(5);
 		rec.setFill(Color.BLACK);
 		getChildren().add(rec);
 	}
+	
 	public void moveRacket(int direction){
 		posX += direction;
 		if(posX <= 0){
-			rec.setX(0);
-		}else{
-		rec.setX(posX);
+			posX = 0;
+		}else if(posX >= 810-90){
+			posX = 810-90;
 		}
+		rec.setX(posX);
+	}
+	
+	public int getwidth(){
+		return width;
+	}
+	
+	public int getheigth(){
+		return heigth;
 	}
 
 	public int getPosX() {
@@ -38,6 +50,5 @@ public class Racket extends Pane{
 	public void setPosY(int posY) {
 		this.posY = posY;
 	}
-	
 
 }

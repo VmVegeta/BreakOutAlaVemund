@@ -9,7 +9,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
     	Level level = new Level();
         primaryStage.setScene(new Scene(level, 800, 600));
-        primaryStage.setTitle("Break Out");
+        primaryStage.setTitle("BreakOut");
         primaryStage.setResizable(false);
         primaryStage.show();
         
