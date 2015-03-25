@@ -1,22 +1,37 @@
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Brick extends Rectangle{
-	
+public class Brick extends Pane{
+	private int brickX;
+	private int brickY;
 	private boolean destroyed;
+	Rectangle rectangle = new Rectangle(brickX, brickY, 50, 25);
 	
 	Brick(int x, int y){
-		this.setTranslateX(x);
-		this.setTranslateY(y);
-		this.setHeight(25);
-		this.setWidth(50);
-		this.setFill(Color.BLUE);
+		this.brickX = x;
+		this.brickY = y;
+		getChildren().add(rectangle);
+		rectangle.setFill(Color.BLUE);
 		
 		int random = (int) Math.random()*5;
 		
 		if(random == 0){
 			destroyed = true;
 		}
+	}
+	public Node drawBrick(){
+			return rectangle;
+	}
+	
+
+	public int getbrickX() {
+		return brickX;
+	}
+
+	public int getbrickY() {
+		return brickY;
 	}
 
 	public boolean isDestroyed() {
