@@ -1,3 +1,4 @@
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -20,11 +21,8 @@ public class Brick extends Pane{
 			destroyed = true;
 		}
 	}
-	public void drawBrick(){
-		if (destroyed == false){
-			getChildren().add(rectangle);
-			rectangle.setFill(Color.BLUE);
-		}
+	public Node drawBrick(){
+			return rectangle;
 	}
 	
 
