@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -13,16 +14,17 @@ public class Level extends Pane{
 	ArrayList<Brick> bricks = new ArrayList<Brick>();
 	Racket racket = new Racket();
 	Ball ball = new Ball(racket.getPosX(), racket.getPosY());
-	StopWatch stopWatch = new StopWatch();
 	private int wishToMoveRacket = 0;
 	private int ballsLeft = 3;
+	private long time;
 
 	public Level (){
 		setLevel1();
 		getChildren().add(racket);
 		getChildren().add(ball);
-		createTimer();
 		inintTimeline();
+		start();
+	}
 	
 
 	private void inintTimeline(){
@@ -39,6 +41,7 @@ public class Level extends Pane{
 					racket.moveRacket(-10);
 				}
 				checkCollision();
+				showElapsedTime();
 
 
 			}
@@ -159,9 +162,25 @@ public class Level extends Pane{
 		}
 	}
 	
-	private void createTimer() {
+	private void showElapsedTime() {
+		TextField time = new TextField(Double.toString(elapsedTime()));
+		time.setLayoutY(570);
+		time.setLayoutX(10);
+		getChildren().add(time);
 		
 		
+	}
+	public void start() {
+		time = System.currentTimeMillis();
+	}
+	
+	public void stop(){
+		time = 0;
+	}
+	
+	public double elapsedTime(){
+		long now= System.currentTimeMillis();
+		return (now - time) / 1000.0;
 	}
 
 }
