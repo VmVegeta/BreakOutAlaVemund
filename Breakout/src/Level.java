@@ -83,13 +83,37 @@ public class Level extends Pane{
 			}
 		}
 		for(int i = 0; i < bricks.size(); i++){
-			if(ball.getX() >= bricks.get(i).getTranslateX() && ball.getX() <= (bricks.get(i).getTranslateX() + 50)
+			if(ball.getX() >= bricks.get(i).getTranslateX() && ball.getX() <= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth())
 					&& ball.getTop() <= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight() +1) 
 					&& ball.getTop() >= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight() -2)){
+				
 				bricks.get(i).setDestroyed(true);
 				getChildren().remove(bricks.get(i));
-				ball.switchDirection();
+				ball.setBallDirectionY(3);
+				
+			}else if(ball.getX() >= bricks.get(i).getTranslateX() && ball.getX() <= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth())
+					&& ball.getBottom() <= (bricks.get(i).getTranslateY() +1) && ball.getBottom() >= (bricks.get(i).getTranslateY() -2)){
+				
+				bricks.get(i).setDestroyed(true);
+				getChildren().remove(bricks.get(i));
+				ball.setBallDirectionY(-3);
+				
+			}else if(ball.getY() >= bricks.get(i).getTranslateY() && ball.getY() <= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight())
+					&& ball.getRigth() <= (bricks.get(i).getTranslateX() + 1) && ball.getRigth() >= (bricks.get(i).getTranslateX() - 2)){
+				
+				bricks.get(i).setDestroyed(true);
+				getChildren().remove(bricks.get(i));
+				ball.setBallDirectionX(-3);
+				
+			}else if(ball.getY() >= bricks.get(i).getTranslateY() && ball.getY() <= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight())
+					&& ball.getLeft() <= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth() + 1)
+					&& ball.getLeft() >= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth() - 2)){
+				
+				bricks.get(i).setDestroyed(true);
+				getChildren().remove(bricks.get(i));
+				ball.setBallDirectionX(3);
 			}
+					
 		}
 	}
 
