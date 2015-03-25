@@ -1,20 +1,23 @@
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 
-public class Ball extends Pane{
+public class Ball extends Circle{
 	private int radius = 7;
 	private int x = 300;
 	private int y = 300;
 	private double ballDirectionX = 3;
 	private double ballDirectionY = -3; 
 	
-	Circle circle = new Circle(x, y, radius, Color.RED);
 	
 	
-	public Ball(){
-		getChildren().add(circle);
+	public Ball(int x, int y){
+		this.x = x + 45;
+		this.y = y - radius;
+		this.setCenterX(x + 45);
+		this.setCenterY(y - radius);
+		this.setRadius(radius);
+		this.setFill(Color.RED);
 	}
 
 	public void moveBall() {
@@ -29,8 +32,8 @@ public class Ball extends Pane{
 		}
 		x += ballDirectionX;
 		y += ballDirectionY;
-		circle.setCenterX(x);
-		circle.setCenterY(y);
+		this.setCenterX(x);
+		this.setCenterY(y);
 		
 	}
 

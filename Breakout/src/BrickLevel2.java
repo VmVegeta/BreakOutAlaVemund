@@ -6,10 +6,10 @@ public class BrickLevel2 extends Brick{
 
 	BrickLevel2(int x, int y) {
 		super(x, y);
-		double randomHits = Math.random();
-		if (randomHits >= 0.2){
+		double random = Math.random();
+		if (random >= 0.2){
 			takeTwoHits = true;
-			this.setFill(Color.GREEN);
+			this.setFill(Color.YELLOWGREEN);
 		}
 		
 	}
