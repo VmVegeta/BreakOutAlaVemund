@@ -63,6 +63,9 @@ public class Level extends Pane{
             else if(e.getCode() == KeyCode.LEFT){
                 wishToMoveRacket = -1;
             }
+        this.setOnKeyReleased(k -> {
+        	wishToMoveRacket = 0;
+        });
         });
 		
 	}
