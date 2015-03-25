@@ -88,9 +88,12 @@ public class Level extends Pane{
 	}
 	private void checkCollisionWithBrick(){
 		for(int i = 0; i < bricks.size(); i++){
-			if(ball.getX() >= bricks.get(i).getbrickX() && ball.getX() <= (bricks.get(i).getbrickX() + 50)
-					&& ball.getTop() <= bricks.get(i).getbrickY() && ball.getTop() >= (bricks.get(i).getbrickY() -3)){
+			if(ball.getX() >= bricks.get(i).getTranslateX() && ball.getX() <= (bricks.get(i).getTranslateX() + 50)
+					&& ball.getTop() <= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight() +1) 
+					&& ball.getTop() >= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight() -2)){
 				bricks.get(i).setDestroyed(true);
+				getChildren().remove(bricks.get(i));
+				bricks.remove(i);
 				ball.switchDirection();
 			}
 		}
