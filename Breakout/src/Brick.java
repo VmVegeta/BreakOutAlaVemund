@@ -3,7 +3,7 @@ import javafx.scene.shape.Rectangle;
 
 public class Brick extends Rectangle{
 	
-	private boolean destroyed;
+	protected boolean destroyed;
 	
 	Brick(int x, int y){
 		this.setTranslateX(x);
