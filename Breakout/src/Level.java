@@ -75,9 +75,17 @@ public class Level extends Pane{
 	}
 
 	private void setLevel1(){
+		if(levelCounter == 0){
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 15; j++){
 				bricks.add(new Brick(50 + j * 47, 60 + i * 22));
+			}
+		}
+		}else if(levelCounter == 1){
+			for(int i = 0; i < 10; i++){
+				for(int j = 0; j < 15; j++){
+					bricks.add(new BrickLevel2(50 + j * 47, 60 + i * 22));
+				}
 			}
 		}
 		for(Brick brick: bricks){
