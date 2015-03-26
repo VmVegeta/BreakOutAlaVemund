@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -14,7 +17,7 @@ public class Level extends Pane{
 	Ball ball = new Ball(racket.getPosX(), racket.getPosY());
 	TextField timeFrame = new TextField();
 	TextField numberOfBallsLeft = new TextField();
-	Label intel = new Label("press space to start");
+	Label intel = new Label("PRESS SPACE TO START");
 	private int wishToMoveRacket = 0;
 	private int ballsLeft = 3;
 	private double time;
@@ -58,6 +61,18 @@ public class Level extends Pane{
 		getChildren().add(numberOfBallsLeft);
 		getChildren().add(intel);
 	}
+	
+	public void resetState(){
+		getChildren().removeAll(bricks);
+		bricks.clear();
+		resetTime();
+		racket.setPosX(380);
+		ball.setBallDirectionX(-3);
+		ball.setBallDirectionY(-3);
+		ball.setX(racket.getPosX() + 45);
+		ball.setY(racket.getPosY() - 7);
+		ballsLeft = 3; 
+	}
 
 	private void setLevel1(){
 		for(int i = 0; i < 10; i++){
@@ -76,6 +91,19 @@ public class Level extends Pane{
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 15; j++){
 				bricks.add(new BrickLevel2(50 + j * 47, 60 + i * 22));
+			}
+		}
+		for(Brick brick: bricks){
+			if(brick.isDestroyed() == false){
+				getChildren().add(brick);
+			}
+		}
+	}
+
+	private void setLevel3() {
+		for(int i = 0; i < 10; i++){
+			for(int j = 0; j < 15; j++){
+				bricks.add(new BrickLevel3(50 + j * 47, 60 + i * 22));
 			}
 		}
 		for(Brick brick: bricks){
@@ -104,7 +132,6 @@ public class Level extends Pane{
 			if(e.getCode() == KeyCode.SPACE) {
 				timer.start();
 				start();
-				spacePressed();
 				getChildren().remove(intel);
 			}
 		});
@@ -159,18 +186,17 @@ public class Level extends Pane{
 		if (ball.getY() > 600){
 			ballsLeft--;
 			if(ballsLeft == 0){
-				Label lost = new Label("U r a loser!!");
-				lost.setLayoutX(280);
-				lost.setLayoutY(150);
+				Label lost = new Label("u r a LOSER!!");
+				lost.setLayoutX(250);
+				lost.setLayoutY(265);
 				lost.setUnderline(true);
 				lost.setWrapText(true);
 				lost.setTextFill(Color.DARKORANGE);
 				lost.setStyle("-fx-font-size:70;");
 				getChildren().add(stop());
-				getChildren().remove(ball);
-				getChildren().remove(racket);
 				getChildren().add(lost);
 				timer.stop();
+				tryAgain();
 			}else{
 				ball.setX(racket.getPosX() + 45);
 				ball.setY(racket.getPosY() - 10);
@@ -178,24 +204,24 @@ public class Level extends Pane{
 		}
 		if (bricks.size() == 0){
 			if(levelCounter++ == 3){
-				Label victory = new Label("Victory!!!");
+				Label victory = new Label("VICTORY!!!");
 				victory.setLayoutX(280);
-				victory.setLayoutY(150);
+				victory.setLayoutY(265);
 				victory.setUnderline(true);
 				victory.setWrapText(true);
 				victory.setTextFill(Color.DARKORANGE);
 				victory.setStyle("-fx-font-size:70;");
 				getChildren().add(stop());
-				getChildren().remove(ball);
-				getChildren().remove(racket);
 				getChildren().add(victory);
 				timer.stop();
 			}else if(levelCounter == 1){
 				setLevel2();
+				ballsLeft = 3;
 				ball.setX(racket.getPosX() + 45);
 				ball.setY(racket.getPosY() - 10);
 			}else if(levelCounter == 2){
 				setLevel3();
+				ballsLeft = 3;
 				ball.setX(racket.getPosX() + 45);
 				ball.setY(racket.getPosY() - 10);
 			}
@@ -208,17 +234,14 @@ public class Level extends Pane{
 		}
 	}
 
-	private void setLevel3() {
-		for(int i = 0; i < 10; i++){
-			for(int j = 0; j < 15; j++){
-				bricks.add(new BrickLevel3(50 + j * 47, 60 + i * 22));
+	private void tryAgain() {
+		this.setOnKeyPressed(e -> {
+			if(e.getCode() == KeyCode.SPACE) {
+				resetState();
+				levelCounter--;
+				spacePressed();
 			}
-		}
-		for(Brick brick: bricks){
-			if(brick.isDestroyed() == false){
-				getChildren().add(brick);
-			}
-		}
+		});
 	}
 
 	private  void showElapsedTime() {
@@ -242,6 +265,10 @@ public class Level extends Pane{
 		long now= System.currentTimeMillis();
 		return (now - time) / 1000.0;
 	}
+	
+	private void resetTime(){
+		time = 0;
+	}
 
 	private void showBallsLeft() {
 		int x = 610;
@@ -251,7 +278,7 @@ public class Level extends Pane{
 	}
 
 	private void showIntel() {
-		intel.setLayoutX(350);
+		intel.setLayoutX(320);
 		intel.setLayoutY(500);
 		intel.setStyle("-fx-font-size:20;");
 	}

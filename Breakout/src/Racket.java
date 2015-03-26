@@ -4,7 +4,7 @@ import javafx.scene.shape.Rectangle;
 
 
 public class Racket extends Pane{
-	private int posX = 400;
+	private int posX = 380;
 	private int posY = 550;
 	private int width = 90;
 	private int heigth = 10;
