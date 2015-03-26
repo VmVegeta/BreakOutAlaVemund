@@ -12,6 +12,8 @@ public class Level extends Pane{
 	ArrayList<Brick> bricks = new ArrayList<Brick>();
 	Racket racket = new Racket();
 	Ball ball = new Ball(racket.getPosX(), racket.getPosY());
+	TextField timeFrame = new TextField();
+	TextField numberOfBallsLeft = new TextField();
 	private int wishToMoveRacket = 0;
 	private int ballsLeft = 3;
 	private double time;
@@ -20,6 +22,10 @@ public class Level extends Pane{
 		setLevel1();
 		getChildren().add(racket);
 		getChildren().add(ball);
+		showElapsedTime();
+		showBallsLeft();
+		getChildren().add(timeFrame);
+		getChildren().add(numberOfBallsLeft);
 		showBallsLeft();
 		inintTimeline();
 		start();
@@ -40,8 +46,8 @@ public class Level extends Pane{
 					racket.moveRacket(-10);
 				}
 				checkCollision();
-				getChildren().add(showElapsedTime());
-				getChildren().add(showBallsLeft());
+				timeFrame.setText(Double.toString(elapsedTime()));
+				numberOfBallsLeft.setText("number of balls left: " + ballsLeft);
 			}
 
 
@@ -176,11 +182,9 @@ public class Level extends Pane{
 		}
 	}
 	
-	private  TextField showElapsedTime() {
-		TextField time = new TextField(Double.toString(elapsedTime()));
-		time.setLayoutY(570);
-		time.setLayoutX(10);
-		return time;
+	private  void showElapsedTime() {
+		timeFrame.setLayoutY(570);
+		timeFrame.setLayoutX(10);
 	}
 	
 	public void start() {
@@ -200,14 +204,12 @@ public class Level extends Pane{
 		return (now - time) / 1000.0;
 	}
 
-	private TextField showBallsLeft() {
+	private void showBallsLeft() {
 		int x = 610;
 		int y = 570;
 		int i = 0;
-		TextField numberOfBallsLeft = new TextField("number of balls left: " + ballsLeft);
 		numberOfBallsLeft.setLayoutX(x);
 		numberOfBallsLeft.setLayoutY(y);
-		return numberOfBallsLeft;
 	}
 
 }
