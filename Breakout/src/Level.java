@@ -6,7 +6,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 public class Level extends Pane{
 
@@ -15,7 +14,7 @@ public class Level extends Pane{
 	Ball ball = new Ball(racket.getPosX(), racket.getPosY());
 	private int wishToMoveRacket = 0;
 	private int ballsLeft = 3;
-	private long time;
+	private double time;
 
 	public Level (){
 		setLevel1();
@@ -41,7 +40,8 @@ public class Level extends Pane{
 					racket.moveRacket(-10);
 				}
 				checkCollision();
-				showElapsedTime();
+				getChildren().add(showElapsedTime());
+				getChildren().add(showBallsLeft());
 
 
 			}
@@ -141,7 +141,8 @@ public class Level extends Pane{
 	
 	private void checkCollision(){
 		if (ball.getY() > 600){
-			if(ballsLeft-- == 0){
+			ballsLeft--;
+			if(ballsLeft == 0){
 				Label lost = new Label("U r a loser!!");
 				lost.setLayoutX(280);
 				lost.setLayoutY(150);
@@ -149,11 +150,13 @@ public class Level extends Pane{
 				lost.setWrapText(true);
 				lost.setTextFill(Color.DARKORANGE);
 				lost.setStyle("-fx-font-size:70;");
+				getChildren().add(stop());
 				getChildren().remove(ball);
 				getChildren().remove(racket);
 				getChildren().add(lost);
 			}
-			showBallsLeft();
+			ball.setCenterX(racket.getLayoutX() + 45);
+			ball.setCenterY(racket.getLayoutY() - 10);
 		}
 		if (bricks.size() == 0){
 			Label victory = new Label("Victory!!!");
@@ -163,6 +166,7 @@ public class Level extends Pane{
 			victory.setWrapText(true);
 			victory.setTextFill(Color.DARKORANGE);
 			victory.setStyle("-fx-font-size:70;");
+			getChildren().add(stop());
 			getChildren().remove(ball);
 			getChildren().remove(racket);
 			getChildren().add(victory);
@@ -175,20 +179,23 @@ public class Level extends Pane{
 		}
 	}
 	
-	private void showElapsedTime() {
+	private  TextField showElapsedTime() {
 		TextField time = new TextField(Double.toString(elapsedTime()));
 		time.setLayoutY(570);
 		time.setLayoutX(10);
-		getChildren().add(time);
-		
-		
+		return time;
 	}
+	
 	public void start() {
 		time = System.currentTimeMillis();
 	}
 	
-	public void stop(){
-		time = 0;
+	public TextField stop(){
+		double timeSpent = elapsedTime();
+		TextField timeScore = new TextField("Time spendt: " + Double.toString(timeSpent));
+		timeScore.setLayoutX(10);
+		timeScore.setLayoutY(570);
+		return timeScore;
 	}
 	
 	public double elapsedTime(){
@@ -196,16 +203,14 @@ public class Level extends Pane{
 		return (now - time) / 1000.0;
 	}
 
-	private void showBallsLeft() {
-		int life = ballsLeft;
-		int x = 790;
-		int y = 580;
+	private TextField showBallsLeft() {
+		int x = 610;
+		int y = 570;
 		int i = 0;
-		while(life > 0){
-		Circle balls = new Circle(x - i * 7, y, 5, Color.RED);
-		getChildren().add(balls);
-		life--;
-		}
+		TextField numberOfBallsLeft = new TextField("number of balls left: " + ballsLeft);
+		numberOfBallsLeft.setLayoutX(x);
+		numberOfBallsLeft.setLayoutY(y);
+		return numberOfBallsLeft;
 	}
 
 }
