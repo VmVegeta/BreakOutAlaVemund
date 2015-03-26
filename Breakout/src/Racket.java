@@ -16,7 +16,7 @@ public class Racket extends Pane{
 		rec.setFill(Color.DARKORANGE);
 		getChildren().add(rec);
 	}
-	
+
 	public void moveRacket(int direction){
 		posX += direction;
 		if(posX <= 0){
@@ -26,11 +26,11 @@ public class Racket extends Pane{
 		}
 		rec.setX(posX);
 	}
-	
+
 	public int getwidth(){
 		return width;
 	}
-	
+
 	public int getheigth(){
 		return heigth;
 	}
@@ -50,5 +50,4 @@ public class Racket extends Pane{
 	public void setPosY(int posY) {
 		this.posY = posY;
 	}
-
 }

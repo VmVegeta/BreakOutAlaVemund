@@ -13,14 +13,9 @@ public class Main extends Application {
         primaryStage.setTitle("BreakOut");
         primaryStage.setResizable(false);
         primaryStage.show();
-        
         level.requestFocus();
     }
 	public static void main(String[] args) {
 		launch(args);
-
 	}
-
-
-
 }

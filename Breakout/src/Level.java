@@ -14,48 +14,52 @@ public class Level extends Pane{
 	Ball ball = new Ball(racket.getPosX(), racket.getPosY());
 	TextField timeFrame = new TextField();
 	TextField numberOfBallsLeft = new TextField();
+	Label intel = new Label("press space to start");
 	private int wishToMoveRacket = 0;
 	private int ballsLeft = 3;
 	private double time;
+	private int levelCounter = 0;
+	private AnimationTimer timer;
 
 	public Level (){
-		setLevel1();
-		getChildren().add(racket);
-		getChildren().add(ball);
-		showElapsedTime();
-		showBallsLeft();
-		getChildren().add(timeFrame);
-		getChildren().add(numberOfBallsLeft);
-		showBallsLeft();
+		showLevel();
 		inintTimeline();
-		start();
+		spacePressed();
 	}
 
-
 	private void inintTimeline(){
-		AnimationTimer timer = new AnimationTimer(){
+		timer = new AnimationTimer(){
 
 			@Override
 			public void handle(long now) {
 				ball.moveBall();
 				keyPressed();
 				if(wishToMoveRacket == 1){
-					racket.moveRacket(10);
+					racket.moveRacket(8);
 				}
 				if(wishToMoveRacket == -1){
-					racket.moveRacket(-10);
+					racket.moveRacket(-8);
 				}
 				checkCollision();
 				timeFrame.setText(Double.toString(elapsedTime()));
 				numberOfBallsLeft.setText("number of balls left: " + ballsLeft);
 			}
-
-
 		};
-		timer.start();
 	}
 
-	public void setLevel1(){
+	private void showLevel() {
+		setLevel1();
+		showIntel();
+		showElapsedTime();
+		showBallsLeft();
+		getChildren().add(racket);
+		getChildren().add(ball);
+		getChildren().add(timeFrame);
+		getChildren().add(numberOfBallsLeft);
+		getChildren().add(intel);
+	}
+
+	private void setLevel1(){
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 15; j++){
 				bricks.add(new Brick(50 + j * 47, 60 + i * 22));
@@ -66,9 +70,8 @@ public class Level extends Pane{
 				getChildren().add(brick);
 			}
 		}
-
 	}
-	
+
 	private void setLevel2(){
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 15; j++){
@@ -81,7 +84,7 @@ public class Level extends Pane{
 			}
 		}
 	}
-	
+
 	private void keyPressed() {
 		this.setOnKeyPressed(e -> {
 			if(e.getCode() == KeyCode.RIGHT) {
@@ -94,16 +97,27 @@ public class Level extends Pane{
 				wishToMoveRacket = 0;
 			});
 		});
-
+	}
+	
+	private void spacePressed(){
+		this.setOnKeyPressed(e -> {
+			if(e.getCode() == KeyCode.SPACE) {
+				timer.start();
+				start();
+				spacePressed();
+				getChildren().remove(intel);
+			}
+		});
 	}
 
 	private void checkCollisionWithRacket() {
 		if(ball.getBottom() <= (racket.getPosY()+1) && ball.getBottom() >= (racket.getPosY()-2)  
 				&& ball.getX() + 3 >= racket.getPosX() && ball.getX() -3 <= (racket.getPosX()+racket.getwidth())){
 			ball.switchDirectionY();
+			ball.setSpeed(wishToMoveRacket);
 		}
-
 	}
+	
 	private void checkCollisionWithBrick(){
 		for(int i = 0; i < bricks.size(); i++){
 			if(bricks.get(i).isDestroyed() == true){
@@ -137,11 +151,10 @@ public class Level extends Pane{
 
 				bricks.get(i).setDestroyed(true);
 				ball.setBallDirectionX(3);
-
 			}	
 		}
 	}
-	
+
 	private void checkCollision(){
 		if (ball.getY() > 600){
 			ballsLeft--;
@@ -157,23 +170,35 @@ public class Level extends Pane{
 				getChildren().remove(ball);
 				getChildren().remove(racket);
 				getChildren().add(lost);
+				timer.stop();
 			}else{
-			ball.setCenterX(racket.getLayoutX() + 45);
-			ball.setCenterY(racket.getLayoutY() - 10);
+				ball.setX(racket.getPosX() + 45);
+				ball.setY(racket.getPosY() - 10);
 			}
 		}
 		if (bricks.size() == 0){
-			Label victory = new Label("Victory!!!");
-			victory.setLayoutX(280);
-			victory.setLayoutY(150);
-			victory.setUnderline(true);
-			victory.setWrapText(true);
-			victory.setTextFill(Color.DARKORANGE);
-			victory.setStyle("-fx-font-size:70;");
-			getChildren().add(stop());
-			getChildren().remove(ball);
-			getChildren().remove(racket);
-			getChildren().add(victory);
+			if(levelCounter++ == 3){
+				Label victory = new Label("Victory!!!");
+				victory.setLayoutX(280);
+				victory.setLayoutY(150);
+				victory.setUnderline(true);
+				victory.setWrapText(true);
+				victory.setTextFill(Color.DARKORANGE);
+				victory.setStyle("-fx-font-size:70;");
+				getChildren().add(stop());
+				getChildren().remove(ball);
+				getChildren().remove(racket);
+				getChildren().add(victory);
+				timer.stop();
+			}else if(levelCounter == 1){
+				setLevel2();
+				ball.setX(racket.getPosX() + 45);
+				ball.setY(racket.getPosY() - 10);
+			}else if(levelCounter == 2){
+				setLevel3();
+				ball.setX(racket.getPosX() + 45);
+				ball.setY(racket.getPosY() - 10);
+			}
 
 		}
 		if (ball.getY() < 300){
@@ -182,16 +207,29 @@ public class Level extends Pane{
 			checkCollisionWithRacket();
 		}
 	}
-	
+
+	private void setLevel3() {
+		for(int i = 0; i < 10; i++){
+			for(int j = 0; j < 15; j++){
+				bricks.add(new BrickLevel3(50 + j * 47, 60 + i * 22));
+			}
+		}
+		for(Brick brick: bricks){
+			if(brick.isDestroyed() == false){
+				getChildren().add(brick);
+			}
+		}
+	}
+
 	private  void showElapsedTime() {
 		timeFrame.setLayoutY(570);
 		timeFrame.setLayoutX(10);
 	}
-	
+
 	public void start() {
 		time = System.currentTimeMillis();
 	}
-	
+
 	public TextField stop(){
 		double timeSpent = elapsedTime();
 		TextField timeScore = new TextField("Time spendt: " + Double.toString(timeSpent));
@@ -199,7 +237,7 @@ public class Level extends Pane{
 		timeScore.setLayoutY(570);
 		return timeScore;
 	}
-	
+
 	public double elapsedTime(){
 		long now= System.currentTimeMillis();
 		return (now - time) / 1000.0;
@@ -208,9 +246,13 @@ public class Level extends Pane{
 	private void showBallsLeft() {
 		int x = 610;
 		int y = 570;
-		int i = 0;
 		numberOfBallsLeft.setLayoutX(x);
 		numberOfBallsLeft.setLayoutY(y);
 	}
 
+	private void showIntel() {
+		intel.setLayoutX(350);
+		intel.setLayoutY(500);
+		intel.setStyle("-fx-font-size:20;");
+	}
 }

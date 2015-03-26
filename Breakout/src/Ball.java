@@ -8,8 +8,7 @@ public class Ball extends Circle{
 	private int y = 300;
 	private double ballDirectionX = 3;
 	private double ballDirectionY = -3; 
-	
-	
+
 	
 	public Ball(int x, int y){
 		this.x = x + 45;
@@ -22,19 +21,18 @@ public class Ball extends Circle{
 
 	public void moveBall() {
 		if (x <= radius){
-			setBallDirectionX(3);
+			switchDirectionX();;
 		}
 		if(x >= 810 - radius){
-			setBallDirectionX(-3);
+			switchDirectionX();
 		}
 		if(y <= 0){
-			setBallDirectionY(3);
+			switchDirectionY();
 		}
 		x += ballDirectionX;
 		y += ballDirectionY;
 		this.setCenterX(x);
 		this.setCenterY(y);
-		
 	}
 
 	public void setBallDirectionX(int ballDirectionX) {
@@ -51,24 +49,40 @@ public class Ball extends Circle{
 	public void switchDirectionX(){
 		this.ballDirectionX *= -1;
 	}
-	
+
 	public int getRigth(){
 		return x+radius;
 	}
+
 	public int getLeft(){
 		return x-radius;
 	}
+
 	public int getTop(){
 		return y-radius;
 	}
+
 	public int getBottom(){
 		return y+radius;
 	}
+
 	public int getX(){
 		return x;
 	}
+	
 	public int getY(){
 		return y;
 	}
 
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public void setSpeed(int speed){
+		ballDirectionX += speed;
+	}
 }
