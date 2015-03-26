@@ -42,15 +42,12 @@ public class Level extends Pane{
 				checkCollision();
 				getChildren().add(showElapsedTime());
 				getChildren().add(showBallsLeft());
-
-
 			}
 
 
 		};
 		timer.start();
 	}
-
 
 	public void setLevel1(){
 		for(int i = 0; i < 10; i++){
