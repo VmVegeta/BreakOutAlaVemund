@@ -114,26 +114,26 @@ public class Level extends Pane{
 		for(int i = 0; i < bricks.size(); i++){
 			if((ball.getX() + 6) >= bricks.get(i).getTranslateX() && (ball.getX() -6) <= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth())
 					&& ball.getTop() <= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight() +1) 
-					&& ball.getTop() >= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight() -2)){
+					&& ball.getTop() >= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight() - 3)){
 
 				bricks.get(i).setDestroyed(true);
 				ball.setBallDirectionY(3);
 
 			}else if((ball.getX() + 6) >= bricks.get(i).getTranslateX() && (ball.getX() - 6) <= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth())
-					&& ball.getBottom() <= (bricks.get(i).getTranslateY() +1) && ball.getBottom() >= (bricks.get(i).getTranslateY() -2)){
+					&& ball.getBottom() <= (bricks.get(i).getTranslateY() +1) && ball.getBottom() >= (bricks.get(i).getTranslateY() - 3)){
 
 				bricks.get(i).setDestroyed(true);
 				ball.setBallDirectionY(-3);
 
 			}else if((ball.getY() + 6) >= bricks.get(i).getTranslateY() && (ball.getY() - 6) <= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight())
-					&& ball.getRigth() <= (bricks.get(i).getTranslateX() + 1) && ball.getRigth() >= (bricks.get(i).getTranslateX() - 2)){
+					&& ball.getRigth() <= (bricks.get(i).getTranslateX() + 1) && ball.getRigth() >= (bricks.get(i).getTranslateX() - 3)){
 
 				bricks.get(i).setDestroyed(true);
 				ball.setBallDirectionX(-3);
 
 			}else if((ball.getY() + 6) >= bricks.get(i).getTranslateY() && (ball.getY() - 6) <= (bricks.get(i).getTranslateY() + bricks.get(i).getHeight())
 					&& ball.getLeft() <= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth() + 1)
-					&& ball.getLeft() >= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth() - 2)){
+					&& ball.getLeft() >= (bricks.get(i).getTranslateX() + bricks.get(i).getWidth() - 3)){
 
 				bricks.get(i).setDestroyed(true);
 				ball.setBallDirectionX(3);
@@ -157,9 +157,10 @@ public class Level extends Pane{
 				getChildren().remove(ball);
 				getChildren().remove(racket);
 				getChildren().add(lost);
-			}
+			}else{
 			ball.setCenterX(racket.getLayoutX() + 45);
 			ball.setCenterY(racket.getLayoutY() - 10);
+			}
 		}
 		if (bricks.size() == 0){
 			Label victory = new Label("Victory!!!");
