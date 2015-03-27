@@ -16,6 +16,8 @@ public class Level extends Pane{
 	TextField numberOfBallsLeft = new TextField();
 	Label intel = new Label("PRESS SPACE TO START");
 	Label lost = new Label("u r a LOSER!!");
+	double timeSpent;
+	TextField timeScore = new TextField("Time spendt: " + Double.toString(timeSpent));
 	private int wishToMoveRacket = 0;
 	private int ballsLeft = 3;
 	private double time;
@@ -49,7 +51,7 @@ public class Level extends Pane{
 	}
 
 	private void showLevel() {
-		setLevel1();
+		setLevel();
 		showIntel();
 		showElapsedTime();
 		showBallsLeft();
@@ -60,17 +62,23 @@ public class Level extends Pane{
 		getChildren().add(intel);
 	}
 
-	private void setLevel1(){
+	private void setLevel(){
 		if(levelCounter == 0){
-		for(int i = 0; i < 10; i++){
-			for(int j = 0; j < 15; j++){
-				bricks.add(new Brick(50 + j * 47, 60 + i * 22));
+			for(int i = 0; i < 10; i++){
+				for(int j = 0; j < 15; j++){
+					bricks.add(new Brick(50 + j * 47, 60 + i * 22));
+				}
 			}
-		}
 		}else if(levelCounter == 1){
 			for(int i = 0; i < 10; i++){
 				for(int j = 0; j < 15; j++){
 					bricks.add(new BrickLevel2(50 + j * 47, 60 + i * 22));
+				}
+			}
+		}else if(levelCounter == 2){
+			for(int i = 0; i < 10; i++){
+				for(int j = 0; j < 15; j++){
+					bricks.add(new BrickLevel3(50 + j * 47, 60 + i * 22));
 				}
 			}
 		}
@@ -80,33 +88,14 @@ public class Level extends Pane{
 			}
 		}
 	}
-
-	private void setLevel2(){
-		for(int i = 0; i < 10; i++){
-			for(int j = 0; j < 15; j++){
-				bricks.add(new BrickLevel2(50 + j * 47, 60 + i * 22));
+	
+	private void nextLevel(){
+		this.setOnKeyPressed(e -> {
+			if(e.getCode() == KeyCode.SPACE){
+				timer.start();
 			}
-		}
-		for(Brick brick: bricks){
-			if(brick.isDestroyed() == false){
-				getChildren().add(brick);
-			}
-		}
+		});
 	}
-
-	private void setLevel3() {
-		for(int i = 0; i < 10; i++){
-			for(int j = 0; j < 15; j++){
-				bricks.add(new BrickLevel3(50 + j * 47, 60 + i * 22));
-			}
-		}
-		for(Brick brick: bricks){
-			if(brick.isDestroyed() == false){
-				getChildren().add(brick);
-			}
-		}
-	}
-
 	private void keyPressed() {
 		this.setOnKeyPressed(e -> {
 			if(e.getCode() == KeyCode.RIGHT) {
@@ -207,16 +196,15 @@ public class Level extends Pane{
 				getChildren().add(stopTime());
 				getChildren().add(victory);
 				timer.stop();
-			}else if(levelCounter == 1){
-				setLevel2();
+			}else {
+				setLevel();
+				timer.stop();
+				nextLevel();
 				ballsLeft = 3;
 				ball.setX(racket.getPosX() + 45);
-				ball.setY(racket.getPosY() - 10);
-			}else if(levelCounter == 2){
-				setLevel3();
-				ballsLeft = 3;
-				ball.setX(racket.getPosX() + 45);
-				ball.setY(racket.getPosY() - 10);
+				ball.setY(racket.getPosY() -10);
+				ball.setCenterX(racket.getPosX() + 45);
+				ball.setCenterY(racket.getPosY() -10);
 			}
 
 		}
@@ -241,6 +229,7 @@ public class Level extends Pane{
 		getChildren().removeAll(bricks);
 		getChildren().remove(lost);
 		bricks.clear();
+		getChildren().remove(timeScore);
 		resetTime();
 		racket.setPosX(380);
 		ball.setBallDirectionX(-3);
@@ -260,8 +249,7 @@ public class Level extends Pane{
 	}
 
 	public TextField stopTime(){
-		double timeSpent = elapsedTime();
-		TextField timeScore = new TextField("Time spendt: " + Double.toString(timeSpent));
+		timeSpent = elapsedTime();
 		timeScore.setLayoutX(10);
 		timeScore.setLayoutY(570);
 		return timeScore;
@@ -289,3 +277,4 @@ public class Level extends Pane{
 		intel.setStyle("-fx-font-size:20;");
 	}
 }
+ 

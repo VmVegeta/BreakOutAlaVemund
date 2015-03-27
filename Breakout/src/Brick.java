@@ -10,7 +10,22 @@ public class Brick extends Rectangle{
 		this.setTranslateY(y);
 		this.setHeight(20);
 		this.setWidth(45);
-		this.setFill(Color.BLUE);
+		switch(y){
+		case 60:
+		case 82: this.setFill(Color.PINK);
+		break;
+		case 104:
+		case 126:
+		case 148: this.setFill(Color.LIGHTGREEN);
+		break;
+		case 170:
+		case 192: this.setFill(Color.YELLOW);
+		break;
+		case 214:
+		case 236:
+		case 258: this.setFill(Color.AQUA);
+		}
+		
 
 		double random = Math.random();
 
