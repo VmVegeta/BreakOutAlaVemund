@@ -1,9 +1,6 @@
 import java.util.ArrayList;
 
 import javafx.animation.AnimationTimer;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -18,6 +15,7 @@ public class Level extends Pane{
 	TextField timeFrame = new TextField();
 	TextField numberOfBallsLeft = new TextField();
 	Label intel = new Label("PRESS SPACE TO START");
+	Label lost = new Label("u r a LOSER!!");
 	private int wishToMoveRacket = 0;
 	private int ballsLeft = 3;
 	private double time;
@@ -26,11 +24,11 @@ public class Level extends Pane{
 
 	public Level (){
 		showLevel();
-		inintTimeline();
+		initTimeline();
 		spacePressed();
 	}
 
-	private void inintTimeline(){
+	private void initTimeline(){
 		timer = new AnimationTimer(){
 
 			@Override
@@ -60,18 +58,6 @@ public class Level extends Pane{
 		getChildren().add(timeFrame);
 		getChildren().add(numberOfBallsLeft);
 		getChildren().add(intel);
-	}
-	
-	public void resetState(){
-		getChildren().removeAll(bricks);
-		bricks.clear();
-		resetTime();
-		racket.setPosX(380);
-		ball.setBallDirectionX(-3);
-		ball.setBallDirectionY(-3);
-		ball.setX(racket.getPosX() + 45);
-		ball.setY(racket.getPosY() - 7);
-		ballsLeft = 3; 
 	}
 
 	private void setLevel1(){
@@ -139,7 +125,7 @@ public class Level extends Pane{
 		this.setOnKeyPressed(e -> {
 			if(e.getCode() == KeyCode.SPACE) {
 				timer.start();
-				start();
+				startTime();
 				getChildren().remove(intel);
 			}
 		});
@@ -194,14 +180,13 @@ public class Level extends Pane{
 		if (ball.getY() > 600){
 			ballsLeft--;
 			if(ballsLeft == 0){
-				Label lost = new Label("u r a LOSER!!");
 				lost.setLayoutX(250);
 				lost.setLayoutY(265);
 				lost.setUnderline(true);
 				lost.setWrapText(true);
 				lost.setTextFill(Color.DARKORANGE);
 				lost.setStyle("-fx-font-size:70;");
-				getChildren().add(stop());
+				getChildren().add(stopTime());
 				getChildren().add(lost);
 				timer.stop();
 				tryAgain();
@@ -219,7 +204,7 @@ public class Level extends Pane{
 				victory.setWrapText(true);
 				victory.setTextFill(Color.DARKORANGE);
 				victory.setStyle("-fx-font-size:70;");
-				getChildren().add(stop());
+				getChildren().add(stopTime());
 				getChildren().add(victory);
 				timer.stop();
 			}else if(levelCounter == 1){
@@ -251,17 +236,30 @@ public class Level extends Pane{
 			}
 		});
 	}
+	
+	public void resetState(){
+		getChildren().removeAll(bricks);
+		getChildren().remove(lost);
+		bricks.clear();
+		resetTime();
+		racket.setPosX(380);
+		ball.setBallDirectionX(-3);
+		ball.setBallDirectionY(-3);
+		ball.setX(racket.getPosX() + 45);
+		ball.setY(racket.getPosY() - 7);
+		ballsLeft = 3; 
+	}
 
 	private  void showElapsedTime() {
 		timeFrame.setLayoutY(570);
 		timeFrame.setLayoutX(10);
 	}
 
-	public void start() {
+	public void startTime() {
 		time = System.currentTimeMillis();
 	}
 
-	public TextField stop(){
+	public TextField stopTime(){
 		double timeSpent = elapsedTime();
 		TextField timeScore = new TextField("Time spendt: " + Double.toString(timeSpent));
 		timeScore.setLayoutX(10);
